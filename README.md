@@ -103,7 +103,7 @@ Combined with real-time collaboration, this creates a highly efficient developme
 | State Management | React Context API |
 | HTTP Client | Axios |
 | Drag & Drop | dnd-kit |
-| Animations | Framer Motion |
+
 
 ---
 
