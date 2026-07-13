@@ -731,7 +731,7 @@ https://github.com/HarishBirla
 LinkedIn:
 
 ```
-https://www.linkedin.com/in/your-linkedin/
+https://www.linkedin.com/in/harish-birla-42523627b/
 ```
 
 ---
