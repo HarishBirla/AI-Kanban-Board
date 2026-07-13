@@ -118,7 +118,6 @@ Combined with real-time collaboration, this creates a highly efficient developme
 - Axios
 - Socket.IO Client
 - Context API
-- Framer Motion
 - dnd-kit
 
 ### Backend
@@ -169,20 +168,7 @@ Combined with real-time collaboration, this creates a highly efficient developme
 
 ---
 
-# 📷 Application Preview
-
-> Add screenshots here after deployment.
-
-| Login | Dashboard |
-|-------|-----------|
-| ![](screenshots/login.png) | ![](screenshots/dashboard.png) |
-
-| Kanban Board | Analytics |
-|-------------|-----------|
-| ![](screenshots/board.png) | ![](screenshots/analytics.png) |
-
---- 
-
+ 
 # 🏗️ Project Architecture
 
 ```
