@@ -182,3 +182,595 @@ Combined with real-time collaboration, this creates a highly efficient developme
 | ![](screenshots/board.png) | ![](screenshots/analytics.png) |
 
 --- 
+
+# 🏗️ Project Architecture
+
+```
+                        ┌──────────────────────────┐
+                        │      React + Vite        │
+                        │    Tailwind CSS v4 UI    │
+                        └─────────────┬────────────┘
+                                      │
+                              REST APIs + Socket.IO
+                                      │
+                     ┌────────────────┴────────────────┐
+                     │                                 │
+             Express.js Backend                Socket.IO Server
+                     │                                 │
+        JWT Authentication & APIs          Live Collaboration
+                     │
+          PostgreSQL Database (Neon)
+                     │
+            Google Gemini AI Integration
+```
+
+---
+
+# 📂 Project Structure
+
+```text
+AI-Kanban-Board
+│
+├── backend
+│   ├── src
+│   │   ├── config
+│   │   ├── controllers
+│   │   ├── db
+│   │   ├── middleware
+│   │   ├── realtime
+│   │   ├── routes
+│   │   ├── services
+│   │   ├── socket
+│   │   ├── utils
+│   │   └── index.js
+│   │
+│   ├── package.json
+│   ├── package-lock.json
+│   └── .env
+│
+├── frontend
+│   ├── public
+│   ├── src
+│   │   ├── assets
+│   │   ├── components
+│   │   ├── context
+│   │   ├── hooks
+│   │   ├── lib
+│   │   ├── pages
+│   │   ├── routes
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   │
+│   ├── package.json
+│   ├── vite.config.js
+│   └── .env
+│
+├── README.md
+└── .gitignore
+```
+
+---
+
+# ⚙️ Getting Started
+
+## Clone Repository
+
+```bash
+git clone https://github.com/HarishBirla/AI-Kanban-Board.git
+
+cd AI-Kanban-Board
+```
+
+---
+
+# 📦 Install Dependencies
+
+## Backend
+
+```bash
+cd backend
+
+npm install
+```
+
+## Frontend
+
+```bash
+cd frontend
+
+npm install
+```
+
+---
+
+# 🔐 Environment Variables
+
+## Backend (.env)
+
+```env
+PORT=5050
+
+NODE_ENV=development
+
+CLIENT_URL=http://localhost:5173
+
+DATABASE_URL=YOUR_NEON_DATABASE_URL
+
+JWT_SECRET=YOUR_SECRET_KEY
+
+JWT_EXPIRES_IN=7d
+
+GEMINI_API_KEY=YOUR_GEMINI_API_KEY
+
+GEMINI_MODEL=gemini-2.5-flash
+```
+
+---
+
+## Frontend (.env)
+
+```env
+VITE_API_URL=http://localhost:5050
+
+VITE_SOCKET_URL=http://localhost:5050
+```
+
+---
+
+# 🗄️ Database Setup
+
+This project uses **PostgreSQL** hosted on **Neon Database**.
+
+### Create a Neon Database
+
+1. Create a Neon account.
+2. Create a PostgreSQL database.
+3. Copy the database connection string.
+4. Paste it into
+
+```env
+DATABASE_URL=
+```
+
+inside
+
+```
+backend/.env
+```
+
+---
+
+# ▶️ Run Backend
+
+```bash
+cd backend
+
+npm run dev
+```
+
+Server starts at
+
+```
+http://localhost:5050
+```
+
+---
+
+# ▶️ Run Frontend
+
+```bash
+cd frontend
+
+npm run dev
+```
+
+Application starts at
+
+```
+http://localhost:5173
+```
+
+---
+
+# 📜 Available Scripts
+
+## Backend
+
+```bash
+npm run dev
+```
+
+Runs backend using Nodemon.
+
+```bash
+npm start
+```
+
+Runs production server.
+
+---
+
+## Frontend
+
+```bash
+npm run dev
+```
+
+Starts Vite development server.
+
+```bash
+npm run build
+```
+
+Creates production build.
+
+```bash
+npm run preview
+```
+
+Preview production build locally.
+
+---
+
+# 🔑 Authentication Flow
+
+```
+User Login/Register
+        │
+        ▼
+Express API
+        │
+        ▼
+Password Hashing (bcrypt)
+        │
+        ▼
+JWT Generated
+        │
+        ▼
+Token Stored on Client
+        │
+        ▼
+Protected API Requests
+```
+
+---
+
+# ⚡ Real-Time Workflow
+
+```
+User moves card
+       │
+       ▼
+Socket.IO Event
+       │
+       ▼
+Backend validates request
+       │
+       ▼
+Database Updated
+       │
+       ▼
+Broadcast to connected users
+       │
+       ▼
+Everyone sees changes instantly
+```
+
+---
+
+# 🤖 AI Features
+
+Powered by **Google Gemini API**
+
+### AI Backlog Generation
+
+Describe a project idea and receive:
+
+- Epics
+- User stories
+- Tasks
+- Priorities
+
+---
+
+### AI Task Breakdown
+
+Convert a large feature into:
+
+- Smaller tasks
+- Actionable subtasks
+- Better sprint planning
+
+---
+
+### AI Sprint Summary
+
+AI analyzes board activity and generates:
+
+- Sprint progress
+- Remaining work
+- Productivity insights
+- Team summary
+
+---
+
+# 🔒 Security
+
+- JWT Authentication
+- Password hashing with bcrypt
+- Protected Routes
+- Environment Variables
+- PostgreSQL Parameterized Queries
+- Role Based Authorization
+- Socket Authentication
+
+---
+
+# 📡 REST API Modules
+
+```
+Authentication
+
+Boards
+
+Columns
+
+Tasks
+
+Users
+
+AI
+
+Real-time Events
+```
+
+---
+
+# 📡 API Overview
+
+## Authentication
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/register` | Register a new user |
+| POST | `/api/auth/login` | Login user |
+| GET | `/api/auth/me` | Get logged-in user |
+
+---
+
+## Boards
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/boards` | Get all boards |
+| POST | `/api/boards` | Create board |
+| GET | `/api/boards/:id` | Get board details |
+| PATCH | `/api/boards/:id` | Update board |
+| DELETE | `/api/boards/:id` | Delete board |
+
+---
+
+## Columns
+
+| Method | Endpoint |
+|--------|----------|
+| POST | `/api/columns` |
+| PATCH | `/api/columns/:id` |
+| DELETE | `/api/columns/:id` |
+
+---
+
+## Tasks
+
+| Method | Endpoint |
+|--------|----------|
+| POST | `/api/tasks` |
+| GET | `/api/tasks/:id` |
+| PATCH | `/api/tasks/:id` |
+| DELETE | `/api/tasks/:id` |
+
+---
+
+## AI
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/ai/backlog` | Generate AI backlog |
+| POST | `/api/ai/breakdown` | Break task into subtasks |
+| POST | `/api/ai/summary` | Generate sprint summary |
+
+---
+
+# 🎨 UI Highlights
+
+- 🎯 Modern Dashboard
+- 📊 Analytics Cards
+- 📅 Calendar View
+- 📋 Kanban Interface
+- 🌙 Dark Theme
+- 💫 Smooth Animations
+- 🎨 Beautiful Tailwind UI
+- 📱 Fully Responsive Design
+- ⚡ Fast Loading Experience
+
+---
+
+# 🚀 Deployment
+
+The application can be deployed using the following platforms.
+
+## Frontend
+
+- Vercel
+- Netlify
+
+## Backend
+
+- Render
+- Railway
+
+## Database
+
+- Neon PostgreSQL
+
+---
+
+# 📈 Future Improvements
+
+- 📌 Email Notifications
+- 📌 Google Authentication
+- 📌 GitHub Authentication
+- 📌 File Attachments
+- 📌 Comments & Mentions
+- 📌 Activity Timeline
+- 📌 Team Chat
+- 📌 Time Tracking
+- 📌 Sprint Planning
+- 📌 Workspace Templates
+- 📌 AI Meeting Notes
+- 📌 AI Burndown Reports
+- 📌 Mobile Application
+
+---
+
+# ⚙️ Performance Optimizations
+
+- Lazy Loading
+- Component Reusability
+- Optimized API Calls
+- Socket Event Optimization
+- PostgreSQL Transactions
+- Modular Architecture
+- Clean MVC Pattern
+- Protected Routes
+- Responsive UI
+- Efficient State Management
+
+---
+
+# 🏆 Project Highlights
+
+✔ Full Stack Application
+
+✔ RESTful API
+
+✔ Real-Time Collaboration
+
+✔ AI Powered Productivity
+
+✔ JWT Authentication
+
+✔ PostgreSQL Database
+
+✔ Socket.IO Integration
+
+✔ Responsive UI
+
+✔ Modern Architecture
+
+✔ Cloud Database
+
+✔ Clean Code Structure
+
+✔ Production Ready Design
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+
+2. Create a new branch
+
+```bash
+git checkout -b feature/awesome-feature
+```
+
+3. Commit your changes
+
+```bash
+git commit -m "Add awesome feature"
+```
+
+4. Push to your branch
+
+```bash
+git push origin feature/awesome-feature
+```
+
+5. Open a Pull Request
+
+---
+
+# 📝 License
+
+This project is licensed under the **MIT License**.
+
+See the **LICENSE** file for more information.
+
+---
+
+# 👨‍💻 Author
+
+## Harish Birla
+
+Computer Science Engineering Student
+
+Full Stack MERN Developer
+
+AI & Backend Enthusiast
+
+GitHub:
+
+```
+https://github.com/HarishBirla
+```
+
+LinkedIn:
+
+```
+https://www.linkedin.com/in/your-linkedin/
+```
+
+---
+
+# 🙏 Acknowledgements
+
+Special thanks to the amazing open-source community.
+
+- React
+- Vite
+- Express.js
+- PostgreSQL
+- Neon
+- Socket.IO
+- Tailwind CSS
+- Google Gemini
+- dnd-kit
+- Framer Motion
+
+---
+
+# ⭐ Show Your Support
+
+If you found this project helpful,
+
+⭐ Star this repository
+
+🍴 Fork it
+
+🛠️ Contribute
+
+📢 Share it
+
+---
+
+<div align="center">
+
+## ⭐ If you like this project, don't forget to star the repository!
+
+Made with ❤️ by **Harish Birla**
+
+</div>
